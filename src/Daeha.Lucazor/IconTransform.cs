@@ -35,7 +35,7 @@ public class IconTransform
     public static IconTransform FlipVertical { get; } = new() { FlipY = true };
 
     /// <summary>Returns the SVG transform attribute value, or null if no transform.</summary>
-    internal string? ToSvgTransform()
+    public string? ToSvgTransform()
     {
         var parts = new List<string>();
 

@@ -1,23 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Lucazor.Blazor</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <!-- NuGet Package -->
     <PackageId>Daeha.Lucazor.Blazor</PackageId>
-    <Version>0.1.0</Version>
-    <Authors>daeha76</Authors>
+    <Version>0.1.1</Version>
+    <Authors>Daeha</Authors>
     <Description>Lucazor Blazor components — use 1700+ Lucide icons as native Blazor components with DI support and full IntelliSense.</Description>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
     <PackageProjectUrl>https://lucide.dev</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/lucide-icons/lucide</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/daeha76/Lucazor</RepositoryUrl>
     <PackageTags>icons;svg;lucide;lucazor;blazor;razor;components</PackageTags>
     <PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
+    <PackageOutputPath>$(MSBuildProjectDirectory)/../nupkgs</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\Daeha.Lucazor\Daeha.Lucazor.csproj" />
   </ItemGroup>
 
