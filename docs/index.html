@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RnLucazor - Lucide Icons for .NET &amp; Blazor</title>
+    <meta name="description" content="1700+ Lucide icons for .NET and Blazor. Strongly-typed, zero-dependency, with full IntelliSense support.">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #0d1117;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent: #818cf8;
+            --green: #34d399;
+            --orange: #fb923c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* Navigation */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        nav .container { display: flex; align-items: center; justify-content: space-between; }
+        nav .logo { font-weight: 700; font-size: 1.25rem; color: var(--text); }
+        nav .logo span { color: var(--accent); }
+        nav .links { display: flex; gap: 24px; }
+        nav .links a { color: var(--text-muted); font-size: 0.9rem; }
+        nav .links a:hover { color: var(--text); text-decoration: none; }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 100px 0 80px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.15) 0%, transparent 60%);
+        }
+        .hero .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 .highlight { background: linear-gradient(135deg, var(--accent), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 28px; border-radius: 10px; font-size: 1rem; font-weight: 600;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn:hover { transform: translateY(-1px); text-decoration: none; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); box-shadow: 0 4px 20px rgba(99,102,241,0.4); }
+        .btn-outline { border: 1px solid var(--border); color: var(--text); }
+        .btn-outline:hover { border-color: var(--accent); }
+
+        /* Install */
+        .install-bar {
+            max-width: 520px; margin: 40px auto 0;
+            background: var(--bg-code); border: 1px solid var(--border);
+            border-radius: 10px; padding: 14px 20px;
+            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .install-bar code { color: var(--green); }
+        .install-bar .prefix { color: var(--text-muted); }
+        .copy-btn {
+            background: none; border: 1px solid var(--border); color: var(--text-muted);
+            padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;
+            transition: all 0.15s;
+        }
+        .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Features */
+        .features { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
+        .section-sub { text-align: center; color: var(--text-muted); margin-bottom: 48px; font-size: 1.05rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .feature-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 28px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .feature-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .feature-icon { font-size: 2rem; margin-bottom: 12px; }
+        .feature-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+        .feature-card p { color: var(--text-muted); font-size: 0.92rem; }
+
+        /* Code example */
+        .code-section { padding: 80px 0; }
+        .code-tabs { display: flex; gap: 4px; margin-bottom: 0; }
+        .code-tab {
+            padding: 10px 20px; background: var(--bg-card); border: 1px solid var(--border);
+            border-bottom: none; border-radius: 8px 8px 0 0; cursor: pointer;
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+        }
+        .code-tab.active { background: var(--bg-code); color: var(--accent); border-color: var(--accent); border-bottom: 1px solid var(--bg-code); }
+        .code-block {
+            background: var(--bg-code); border: 1px solid var(--border);
+            border-radius: 0 12px 12px 12px; padding: 24px; overflow-x: auto;
+            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.88rem;
+            line-height: 1.7; display: none;
+        }
+        .code-block.active { display: block; }
+        .code-block .kw { color: #c678dd; }
+        .code-block .str { color: #98c379; }
+        .code-block .cm { color: #5c6370; font-style: italic; }
+        .code-block .fn { color: #61afef; }
+        .code-block .tp { color: #e5c07b; }
+        .code-block .tag { color: #e06c75; }
+        .code-block .attr { color: #d19a66; }
+
+        /* Architecture */
+        .arch-section { padding: 80px 0; }
+        .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        .arch-box {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 28px;
+        }
+        .arch-box h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--accent); }
+        .arch-item { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; display: flex; justify-content: space-between; }
+        .arch-item:last-child { border-bottom: none; }
+        .arch-item .name { font-weight: 600; font-family: 'SF Mono', 'Fira Code', monospace; }
+        .arch-item .desc { color: var(--text-muted); }
+
+        /* Stats */
+        .stats { padding: 60px 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+        .stat-item .num { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-item .label { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+
+        /* Footer */
+        footer {
+            padding: 40px 0; border-top: 1px solid var(--border);
+            text-align: center; color: var(--text-muted); font-size: 0.85rem;
+        }
+        footer a { color: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero { padding: 60px 0 50px; }
+            .arch-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="container">
+        <div class="logo">Rn<span>Lucazor</span></div>
+        <div class="links">
+            <a href="#features">Features</a>
+            <a href="#usage">Usage</a>
+            <a href="#architecture">Architecture</a>
+            <a href="https://github.com/daeha76/RnLucazor">GitHub</a>
+            <a href="https://www.nuget.org/packages/Daeha.RnLucazor">NuGet</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <div class="badge">v0.2.0 &mdash; 1700+ Icons</div>
+        <h1>Lucide Icons for<br><span class="highlight">.NET &amp; Blazor</span></h1>
+        <p>1700+ beautiful, consistent open-source icons. Strongly-typed with full IntelliSense, zero dependencies, and pluggable rendering.</p>
+        <div class="hero-buttons">
+            <a href="https://www.nuget.org/packages/Daeha.RnLucazor" class="btn btn-primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                NuGet Package
+            </a>
+            <a href="https://github.com/daeha76/RnLucazor" class="btn btn-outline">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+            </a>
+        </div>
+        <div class="install-bar">
+            <div>
+                <span class="prefix">$</span> <code>dotnet add package Daeha.RnLucazor</code>
+            </div>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText('dotnet add package Daeha.RnLucazor').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)})">Copy</button>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item"><div class="num">1700+</div><div class="label">Icons</div></div>
+            <div class="stat-item"><div class="num">0</div><div class="label">Dependencies</div></div>
+            <div class="stat-item"><div class="num">3</div><div class="label">Target Frameworks</div></div>
+            <div class="stat-item"><div class="num">100%</div><div class="label">Type-safe</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+    <div class="container">
+        <h2 class="section-title">Features</h2>
+        <p class="section-sub">Everything you need to use beautiful icons in your .NET applications</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F50D;</div>
+                <h3>Full IntelliSense</h3>
+                <p>Every icon is a strongly-typed static property. Get autocomplete and compile-time validation with <code>RnIcons.Activity</code>, <code>RnIcons.Heart</code>, etc.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4E6;</div>
+                <h3>Zero Dependencies</h3>
+                <p>The core library targets netstandard2.0 with absolutely no external dependencies. Works everywhere .NET runs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x26A1;</div>
+                <h3>Blazor Component</h3>
+                <p>Drop-in <code>&lt;RnIcon&gt;</code> component with DI support. Supports size, color, stroke width, transforms, and CSS classes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F504;</div>
+                <h3>Icon Transforms</h3>
+                <p>Built-in rotation (90/180/270) and flip (horizontal/vertical) transforms. Custom rotation angles also supported.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F527;</div>
+                <h3>Pluggable Rendering</h3>
+                <p>Implement <code>ISvgRenderer</code> to render icons to any target: WPF, MAUI, SkiaSharp, PDF, and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F9EA;</div>
+                <h3>DI &amp; Testing</h3>
+                <p><code>IIconProvider</code> interface makes it easy to inject icons and mock them in unit tests. Register custom icons alongside built-in ones.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Code Examples -->
+<section class="code-section" id="usage">
+    <div class="container">
+        <h2 class="section-title">Quick Start</h2>
+        <p class="section-sub">Get up and running in minutes</p>
+        <div class="code-tabs">
+            <div class="code-tab active" onclick="switchTab(0)">C# / .NET</div>
+            <div class="code-tab" onclick="switchTab(1)">Blazor</div>
+            <div class="code-tab" onclick="switchTab(2)">Advanced</div>
+        </div>
+        <pre class="code-block active"><span class="kw">using</span> <span class="tp">RnLucazor</span>;
+
+<span class="cm">// Static access — compile-time safe, with full IntelliSense</span>
+<span class="kw">var</span> svg = <span class="tp">RnIcons</span>.<span class="fn">Activity</span>.<span class="fn">ToSvg</span>();
+<span class="kw">var</span> svg2 = <span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(size: <span class="attr">32</span>, stroke: <span class="str">"red"</span>);
+
+<span class="cm">// Dynamic lookup by name (auto-initializes on first call)</span>
+<span class="kw">var</span> icon = <span class="tp">RnIconRegistry</span>.<span class="fn">GetIcon</span>(<span class="str">"activity"</span>);
+Console.<span class="fn">WriteLine</span>(icon?.<span class="fn">ToSvg</span>());
+
+<span class="cm">// List all available icons</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> name <span class="kw">in</span> <span class="tp">RnIconRegistry</span>.<span class="fn">GetIconNames</span>())
+{
+    Console.<span class="fn">WriteLine</span>(name);
+}</pre>
+        <pre class="code-block"><span class="cm">@* Register in Program.cs *@</span>
+builder.Services.<span class="fn">AddRnLucazor</span>();
+
+<span class="cm">@* Add to _Imports.razor *@</span>
+<span class="tag">@using</span> <span class="tp">RnLucazor</span>
+<span class="tag">@using</span> <span class="tp">RnLucazor.Blazor</span>
+
+<span class="cm">@* Use in your components *@</span>
+<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.Activity"</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.Heart"</span> <span class="attr">Size</span>=<span class="str">"32"</span> <span class="attr">Color</span>=<span class="str">"red"</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;RnIcon</span> <span class="attr">Name</span>=<span class="str">"arrow-right"</span> <span class="attr">Size</span>=<span class="str">"16"</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.ArrowUp"</span> <span class="attr">Transform</span>=<span class="str">"IconTransform.Rotate90"</span> <span class="tag">/&gt;</span></pre>
+        <pre class="code-block"><span class="cm">// Full control with SvgRenderOptions</span>
+<span class="kw">var</span> svg = <span class="tp">RnIcons</span>.<span class="fn">Heart</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span>
+{
+    Size = <span class="attr">48</span>,
+    Stroke = <span class="str">"#ff0000"</span>,
+    Fill = <span class="str">"pink"</span>,
+    StrokeWidth = <span class="attr">1.5f</span>,
+    CssClass = <span class="str">"icon-heart"</span>,
+    Transform = <span class="tp">IconTransform</span>.Rotate90,
+});
+
+<span class="cm">// Custom renderer for different targets (WPF, MAUI, etc.)</span>
+<span class="kw">public class</span> <span class="tp">WpfSvgRenderer</span> : <span class="tp">ISvgRenderer</span>
+{
+    <span class="kw">public string</span> <span class="fn">Render</span>(<span class="tp">IconData</span> icon, <span class="tp">SvgRenderOptions</span>? options = <span class="kw">null</span>)
+    {
+        <span class="cm">// Convert to WPF DrawingGroup...</span>
+    }
+}</pre>
+    </div>
+</section>
+
+<!-- Architecture -->
+<section class="arch-section" id="architecture">
+    <div class="container">
+        <h2 class="section-title">Architecture</h2>
+        <p class="section-sub">Clean, extensible design with clear separation of concerns</p>
+        <div class="arch-grid">
+            <div class="arch-box">
+                <h3>Daeha.RnLucazor <small style="color:var(--text-muted)">(netstandard2.0)</small></h3>
+                <div class="arch-item"><span class="name">RnIcons</span><span class="desc">1700+ static icon properties</span></div>
+                <div class="arch-item"><span class="name">RnIconRegistry</span><span class="desc">Name-based lookup</span></div>
+                <div class="arch-item"><span class="name">IconData</span><span class="desc">Icon SVG data model</span></div>
+                <div class="arch-item"><span class="name">ISvgRenderer</span><span class="desc">Pluggable rendering</span></div>
+                <div class="arch-item"><span class="name">IIconProvider</span><span class="desc">DI-friendly interface</span></div>
+                <div class="arch-item"><span class="name">SvgRenderOptions</span><span class="desc">Full customization</span></div>
+                <div class="arch-item"><span class="name">IconTransform</span><span class="desc">Rotation &amp; flip</span></div>
+            </div>
+            <div class="arch-box">
+                <h3>Daeha.RnLucazor.Blazor <small style="color:var(--text-muted)">(net8.0+)</small></h3>
+                <div class="arch-item"><span class="name">RnIcon</span><span class="desc">Blazor component</span></div>
+                <div class="arch-item"><span class="name">AddRnLucazor()</span><span class="desc">DI registration extension</span></div>
+                <div style="margin-top: 24px; padding: 16px; background: rgba(99,102,241,0.1); border-radius: 8px; font-size: 0.88rem;">
+                    <strong style="color: var(--accent);">Supported targets:</strong>
+                    <div style="margin-top: 8px; color: var(--text-muted);">
+                        .NET 8 &middot; .NET 9 &middot; .NET 10<br>
+                        Blazor Server &middot; Blazor WebAssembly &middot; Blazor Hybrid
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Packages -->
+<section style="padding: 80px 0;">
+    <div class="container">
+        <h2 class="section-title">Packages</h2>
+        <p class="section-sub">Choose the right package for your project</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 700px; margin: 0 auto;">
+            <div class="feature-card" style="text-align: center;">
+                <h3 style="color: var(--accent); margin-bottom: 8px;">Daeha.RnLucazor</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Core icon data library<br>netstandard2.0</p>
+                <code style="background: var(--bg-code); padding: 8px 14px; border-radius: 6px; font-size: 0.8rem; display: block;">dotnet add package Daeha.RnLucazor</code>
+            </div>
+            <div class="feature-card" style="text-align: center;">
+                <h3 style="color: var(--accent); margin-bottom: 8px;">Daeha.RnLucazor.Blazor</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Blazor component + DI<br>net8.0 / net9.0 / net10.0</p>
+                <code style="background: var(--bg-code); padding: 8px 14px; border-radius: 6px; font-size: 0.8rem; display: block;">dotnet add package Daeha.RnLucazor.Blazor</code>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p style="margin-bottom: 8px;">
+            <strong style="color: var(--text);">RnLucazor</strong> &mdash; Lucide icons for .NET &amp; Blazor
+        </p>
+        <p>
+            ISC License &middot; Icons by <a href="https://lucide.dev">Lucide</a> &middot;
+            Built by <a href="https://github.com/daeha76">daeha76</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+function switchTab(index) {
+    document.querySelectorAll('.code-tab').forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.code-block').forEach((b, i) => {
+        b.classList.toggle('active', i === index);
+    });
+}
+</script>
+
+</body>
+</html>
