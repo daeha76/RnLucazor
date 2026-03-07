@@ -24,7 +24,7 @@ public class StringSvgRenderer : ISvgRenderer
           .Append(" stroke-linejoin=\"").Append(opts.StrokeLineJoin).Append('"');
 
         if (!string.IsNullOrEmpty(opts.CssClass))
-            sb.Append(" class=\"").Append(IconElement.XmlEscape(opts.CssClass)).Append('"');
+            sb.Append(" class=\"").Append(IconElement.XmlEscape(opts.CssClass!)).Append('"');
 
         if (opts.Attributes != null)
         {
