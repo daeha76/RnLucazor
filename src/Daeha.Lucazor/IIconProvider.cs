@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Provides icon lookup by name.

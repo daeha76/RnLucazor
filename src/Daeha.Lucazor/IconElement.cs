@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Represents a single SVG child element (e.g., path, circle, rect) within an icon.

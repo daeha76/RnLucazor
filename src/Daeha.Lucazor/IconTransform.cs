@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Describes a visual transform applied to an icon (rotation, flip).

@@ -5,12 +5,12 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Lucazor</RootNamespace>
+    <RootNamespace>RnLucazor</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <!-- NuGet Package -->
-    <PackageId>Daeha.Lucazor</PackageId>
-    <Version>0.1.1</Version>
+    <PackageId>Daeha.RnLucazor</PackageId>
+    <Version>0.2.0</Version>
     <Authors>Daeha</Authors>
     <Description>Lucide icon library for .NET — 1700+ beautiful open-source icons as code with DI support and pluggable rendering.</Description>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>

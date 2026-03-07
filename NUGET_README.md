@@ -1,42 +1,42 @@
-# Daeha.Lucazor
+# Daeha.RnLucazor
 
 1700+ [Lucide](https://lucide.dev) icons for .NET and Blazor. Zero dependencies. Full IntelliSense.
 
 ## Quick Start
 
 ```bash
-dotnet add package Daeha.Lucazor
+dotnet add package Daeha.RnLucazor
 ```
 
 ```csharp
-using Lucazor;
+using RnLucazor;
 
 // Compile-time safe with IntelliSense
-var svg = LucazorIcons.Heart.ToSvg();
-var svg2 = LucazorIcons.ArrowRight.ToSvg(size: 32, stroke: "red");
+var svg = RnIcons.Heart.ToSvg();
+var svg2 = RnIcons.ArrowRight.ToSvg(size: 32, stroke: "red");
 
 // Dynamic lookup by name
-var icon = LucazorIconRegistry.GetIcon("activity");
+var icon = RnIconRegistry.GetIcon("activity");
 ```
 
 ## Blazor
 
 ```bash
-dotnet add package Daeha.Lucazor.Blazor
+dotnet add package Daeha.RnLucazor.Blazor
 ```
 
 ```csharp
 // Program.cs
-builder.Services.AddLucazor();
+builder.Services.AddRnLucazor();
 ```
 
 ```razor
-@using Lucazor
-@using Lucazor.Blazor
+@using RnLucazor
+@using RnLucazor.Blazor
 
-<LucazorIcon Icon="LucazorIcons.Heart" Size="32" Color="red" />
-<LucazorIcon Name="arrow-right" Size="16" />
-<LucazorIcon Icon="LucazorIcons.ArrowUp" Transform="IconTransform.Rotate90" />
+<RnIcon Icon="RnIcons.Heart" Size="32" Color="red" />
+<RnIcon Name="arrow-right" Size="16" />
+<RnIcon Icon="RnIcons.ArrowUp" Transform="IconTransform.Rotate90" />
 ```
 
 ## Features
@@ -49,14 +49,14 @@ builder.Services.AddLucazor();
 - **DI support** — `IIconProvider` interface for dependency injection and testing
 - **Pluggable rendering** — implement `ISvgRenderer` for WPF, MAUI, SkiaSharp, etc.
 - **Custom icons** — register your own icons alongside built-in ones
-- **Blazor component** — `<LucazorIcon>` with full parameter binding
+- **Blazor component** — `<RnIcon>` with full parameter binding
 
 ## Advanced Usage
 
 ### SvgRenderOptions
 
 ```csharp
-var svg = LucazorIcons.Heart.ToSvg(new SvgRenderOptions
+var svg = RnIcons.Heart.ToSvg(new SvgRenderOptions
 {
     Size = 48,
     Stroke = "#ff0000",
@@ -86,7 +86,7 @@ public class MyService
 ### Custom Icons
 
 ```csharp
-builder.Services.AddLucazor(provider =>
+builder.Services.AddRnLucazor(provider =>
 {
     provider.AddIcon("my-logo", new IconData("my-logo", new IconElement[] { ... }));
 });
@@ -98,15 +98,15 @@ Icons use PascalCase in C#. For dynamic lookup, use the original kebab-case name
 
 | SVG | C# | Dynamic |
 |-----|-----|---------|
-| `activity.svg` | `LucazorIcons.Activity` | `"activity"` |
-| `arrow-right.svg` | `LucazorIcons.ArrowRight` | `"arrow-right"` |
+| `activity.svg` | `RnIcons.Activity` | `"activity"` |
+| `arrow-right.svg` | `RnIcons.ArrowRight` | `"arrow-right"` |
 
 ## Packages
 
 | Package | Target | Description |
 |---------|--------|-------------|
-| [`Daeha.Lucazor`](https://www.nuget.org/packages/Daeha.Lucazor) | netstandard2.0 | Core library (zero dependencies) |
-| [`Daeha.Lucazor.Blazor`](https://www.nuget.org/packages/Daeha.Lucazor.Blazor) | net8.0+ | Blazor component with DI |
+| [`Daeha.RnLucazor`](https://www.nuget.org/packages/Daeha.RnLucazor) | netstandard2.0 | Core library (zero dependencies) |
+| [`Daeha.RnLucazor.Blazor`](https://www.nuget.org/packages/Daeha.RnLucazor.Blazor) | net8.0+ | Blazor component with DI |
 
 ## License
 

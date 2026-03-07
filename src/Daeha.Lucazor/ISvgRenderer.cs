@@ -1,4 +1,4 @@
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Renders <see cref="IconData"/> to SVG string output.

@@ -2,14 +2,14 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Default implementation of <see cref="IIconProvider"/> backed by the
-/// generated <see cref="LucazorIcons"/> static class.
+/// generated <see cref="RnIcons"/> static class.
 /// Supports registering custom icons alongside the built-in ones.
 /// </summary>
-public class LucazorIconProvider : IIconProvider
+public class RnIconProvider : IIconProvider
 {
     private readonly ConcurrentDictionary<string, IconData> _customIcons
         = new ConcurrentDictionary<string, IconData>(StringComparer.OrdinalIgnoreCase);
@@ -20,7 +20,7 @@ public class LucazorIconProvider : IIconProvider
         if (_customIcons.TryGetValue(name, out var custom))
             return custom;
 
-        return LucazorIconRegistry.GetIcon(name);
+        return RnIconRegistry.GetIcon(name);
     }
 
     /// <inheritdoc/>
@@ -29,7 +29,7 @@ public class LucazorIconProvider : IIconProvider
         foreach (var name in _customIcons.Keys)
             yield return name;
 
-        foreach (var name in LucazorIconRegistry.GetIconNames())
+        foreach (var name in RnIconRegistry.GetIconNames())
         {
             if (!_customIcons.ContainsKey(name))
                 yield return name;
@@ -37,7 +37,7 @@ public class LucazorIconProvider : IIconProvider
     }
 
     /// <inheritdoc/>
-    public int Count => LucazorIconRegistry.Count + _customIcons.Count;
+    public int Count => RnIconRegistry.Count + _customIcons.Count;
 
     /// <summary>
     /// Registers a custom icon. Overrides any built-in icon with the same name.

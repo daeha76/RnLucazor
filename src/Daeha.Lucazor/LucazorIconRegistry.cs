@@ -2,13 +2,13 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Registry for looking up icons by their kebab-case name at runtime.
 /// Icons are automatically registered on first access.
 /// </summary>
-public static class LucazorIconRegistry
+public static class RnIconRegistry
 {
     private static readonly ConcurrentDictionary<string, IconData> Icons
         = new ConcurrentDictionary<string, IconData>(StringComparer.OrdinalIgnoreCase);
@@ -26,7 +26,7 @@ public static class LucazorIconRegistry
     private static void EnsureInitialized()
     {
         if (_initialized) return;
-        LucazorIcons.RegisterAll();
+        RnIcons.RegisterAll();
         _initialized = true;
     }
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Options for rendering an icon as SVG.

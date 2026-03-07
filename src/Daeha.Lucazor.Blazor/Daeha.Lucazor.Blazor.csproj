@@ -4,12 +4,12 @@
     <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Lucazor.Blazor</RootNamespace>
+    <RootNamespace>RnLucazor.Blazor</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <!-- NuGet Package -->
-    <PackageId>Daeha.Lucazor.Blazor</PackageId>
-    <Version>0.1.1</Version>
+    <PackageId>Daeha.RnLucazor.Blazor</PackageId>
+    <Version>0.2.0</Version>
     <Authors>Daeha</Authors>
     <Description>Lucazor Blazor components — use 1700+ Lucide icons as native Blazor components with DI support and full IntelliSense.</Description>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>

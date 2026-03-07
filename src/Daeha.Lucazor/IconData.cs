@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Lucazor;
+namespace RnLucazor;
 
 /// <summary>
 /// Represents a Lucide icon's SVG data.
@@ -43,5 +43,5 @@ public class IconData
     }
 
     /// <inheritdoc/>
-    public override string ToString() => $"LucazorIcon({Name}, {Elements.Count} elements)";
+    public override string ToString() => $"RnIcon({Name}, {Elements.Count} elements)";
 }

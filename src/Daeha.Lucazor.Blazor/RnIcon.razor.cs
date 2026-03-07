@@ -1,12 +1,12 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 
-namespace Lucazor.Blazor;
+namespace RnLucazor.Blazor;
 
-public partial class LucazorIcon : ComponentBase
+public partial class RnIcon : ComponentBase
 {
     /// <summary>
-    /// The icon data to render. Use LucazorIcons.IconName (e.g., LucazorIcons.Activity).
+    /// The icon data to render. Use RnIcons.IconName (e.g., RnIcons.Activity).
     /// Takes priority over <see cref="Name"/>.
     /// </summary>
     [Parameter]
@@ -85,6 +85,6 @@ public partial class LucazorIcon : ComponentBase
         if (IconProvider != null)
             return IconProvider.GetIcon(name);
 
-        return LucazorIconRegistry.GetIcon(name);
+        return RnIconRegistry.GetIcon(name);
     }
 }

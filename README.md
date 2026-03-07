@@ -1,4 +1,4 @@
-# Daeha.Lucazor
+# Daeha.RnLucazor
 
 Lucide icon library for .NET and Blazor. Use 1700+ beautiful & consistent open-source icons in your .NET applications.
 
@@ -6,14 +6,14 @@ Lucide icon library for .NET and Blazor. Use 1700+ beautiful & consistent open-s
 
 | Package | Target | Description |
 |---------|--------|-------------|
-| `Daeha.Lucazor` | netstandard2.0 | Core icon data library (zero dependencies) |
-| `Daeha.Lucazor.Blazor` | net8.0+ | Blazor component with DI support |
+| `Daeha.RnLucazor` | netstandard2.0 | Core icon data library (zero dependencies) |
+| `Daeha.RnLucazor.Blazor` | net8.0+ | Blazor component with DI support |
 
 ## Installation
 
 ```bash
-dotnet add package Daeha.Lucazor
-dotnet add package Daeha.Lucazor.Blazor   # For Blazor apps
+dotnet add package Daeha.RnLucazor
+dotnet add package Daeha.RnLucazor.Blazor   # For Blazor apps
 ```
 
 ## Usage
@@ -21,18 +21,18 @@ dotnet add package Daeha.Lucazor.Blazor   # For Blazor apps
 ### Direct SVG output (any .NET app)
 
 ```csharp
-using Lucazor;
+using RnLucazor;
 
 // Static access — compile-time safe, with full IntelliSense
-var svg = LucazorIcons.Activity.ToSvg();
-var svg2 = LucazorIcons.ArrowRight.ToSvg(size: 32, stroke: "red", strokeWidth: 1.5f);
+var svg = RnIcons.Activity.ToSvg();
+var svg2 = RnIcons.ArrowRight.ToSvg(size: 32, stroke: "red", strokeWidth: 1.5f);
 
 // Dynamic lookup by kebab-case name (auto-initializes on first call)
-var icon = LucazorIconRegistry.GetIcon("activity");
+var icon = RnIconRegistry.GetIcon("activity");
 Console.WriteLine(icon?.ToSvg());
 
 // List all available icons
-foreach (var name in LucazorIconRegistry.GetIconNames())
+foreach (var name in RnIconRegistry.GetIconNames())
 {
     Console.WriteLine(name);
 }
@@ -42,7 +42,7 @@ foreach (var name in LucazorIconRegistry.GetIconNames())
 
 ```csharp
 // Full control with SvgRenderOptions
-var svg = LucazorIcons.Heart.ToSvg(new SvgRenderOptions
+var svg = RnIcons.Heart.ToSvg(new SvgRenderOptions
 {
     Size = 48,
     Stroke = "#ff0000",
@@ -59,19 +59,19 @@ var svg = LucazorIcons.Heart.ToSvg(new SvgRenderOptions
 
 // Use a custom renderer
 ISvgRenderer renderer = new StringSvgRenderer();
-var output = renderer.Render(LucazorIcons.Star, new SvgRenderOptions { Size = 16 });
+var output = renderer.Render(RnIcons.Star, new SvgRenderOptions { Size = 16 });
 ```
 
 ### Icon transforms
 
 ```csharp
 // Built-in transforms
-LucazorIcons.ArrowRight.ToSvg(new SvgRenderOptions { Transform = IconTransform.Rotate90 });
-LucazorIcons.ArrowRight.ToSvg(new SvgRenderOptions { Transform = IconTransform.FlipHorizontal });
+RnIcons.ArrowRight.ToSvg(new SvgRenderOptions { Transform = IconTransform.Rotate90 });
+RnIcons.ArrowRight.ToSvg(new SvgRenderOptions { Transform = IconTransform.FlipHorizontal });
 
 // Custom transforms
 var transform = new IconTransform { Rotate = 45, FlipX = true };
-LucazorIcons.Star.ToSvg(new SvgRenderOptions { Transform = transform });
+RnIcons.Star.ToSvg(new SvgRenderOptions { Transform = transform });
 ```
 
 ### Blazor Component
@@ -79,12 +79,12 @@ LucazorIcons.Star.ToSvg(new SvgRenderOptions { Transform = transform });
 Register services in `Program.cs`:
 
 ```csharp
-using Lucazor.Blazor;
+using RnLucazor.Blazor;
 
-builder.Services.AddLucazor();
+builder.Services.AddRnLucazor();
 
 // Or with custom icons:
-builder.Services.AddLucazor(provider =>
+builder.Services.AddRnLucazor(provider =>
 {
     provider.AddIcon("my-logo", new IconData("my-logo", new IconElement[]
     {
@@ -97,27 +97,27 @@ builder.Services.AddLucazor(provider =>
 Add to your `_Imports.razor`:
 
 ```razor
-@using Lucazor
-@using Lucazor.Blazor
+@using RnLucazor
+@using RnLucazor.Blazor
 ```
 
 Use in your components:
 
 ```razor
 @* Static reference (compile-time safe) *@
-<LucazorIcon Icon="LucazorIcons.Activity" />
+<RnIcon Icon="RnIcons.Activity" />
 
 @* With customization *@
-<LucazorIcon Icon="LucazorIcons.Heart" Size="32" Color="red" StrokeWidth="1.5f" />
+<RnIcon Icon="RnIcons.Heart" Size="32" Color="red" StrokeWidth="1.5f" />
 
 @* Dynamic by name *@
-<LucazorIcon Name="arrow-right" Size="16" />
+<RnIcon Name="arrow-right" Size="16" />
 
 @* With transform *@
-<LucazorIcon Icon="LucazorIcons.ArrowUp" Transform="IconTransform.Rotate90" />
+<RnIcon Icon="RnIcons.ArrowUp" Transform="IconTransform.Rotate90" />
 
 @* With CSS class and extra attributes *@
-<LucazorIcon Icon="LucazorIcons.Search" CssClass="icon-search" id="search-icon" />
+<RnIcon Icon="RnIcons.Search" CssClass="icon-search" id="search-icon" />
 ```
 
 ### Dependency Injection
@@ -161,32 +161,32 @@ builder.Services.AddSingleton<ISvgRenderer, WpfSvgRenderer>();
 ## Architecture
 
 ```
-Daeha.Lucazor (netstandard2.0)           namespace Lucazor
+Daeha.RnLucazor (netstandard2.0)           namespace RnLucazor
 ├── IconData              — Icon SVG data (extensible)
 ├── IconElement           — SVG child element (path, circle, etc.)
-├── LucazorIcons          — 1700+ static icon properties (generated)
-├── LucazorIconRegistry   — Name-based lookup (auto-initializing)
+├── RnIcons          — 1700+ static icon properties (generated)
+├── RnIconRegistry   — Name-based lookup (auto-initializing)
 ├── IIconProvider         — DI-friendly icon provider interface
-├── LucazorIconProvider   — Default provider with custom icon support
+├── RnIconProvider   — Default provider with custom icon support
 ├── ISvgRenderer          — Pluggable rendering interface
 ├── StringSvgRenderer     — Default string renderer
 ├── SvgRenderOptions      — Full rendering customization
 └── IconTransform         — Rotation/flip transforms
 
-Daeha.Lucazor.Blazor (net8.0)            namespace Lucazor.Blazor
-├── LucazorIcon           — Blazor component with DI injection
-└── ServiceCollectionExtensions — AddLucazor() extension
+Daeha.RnLucazor.Blazor (net8.0)            namespace RnLucazor.Blazor
+├── RnIcon           — Blazor component with DI injection
+└── ServiceCollectionExtensions — AddRnLucazor() extension
 ```
 
 ## Icon Naming
 
 | SVG filename | C# Property |
 |---|---|
-| `activity.svg` | `LucazorIcons.Activity` |
-| `arrow-right.svg` | `LucazorIcons.ArrowRight` |
-| `circle-dot.svg` | `LucazorIcons.CircleDot` |
+| `activity.svg` | `RnIcons.Activity` |
+| `arrow-right.svg` | `RnIcons.ArrowRight` |
+| `circle-dot.svg` | `RnIcons.CircleDot` |
 
-For dynamic lookup, use the original kebab-case name: `LucazorIconRegistry.GetIcon("arrow-right")`.
+For dynamic lookup, use the original kebab-case name: `RnIconRegistry.GetIcon("arrow-right")`.
 
 ## Regenerating Icons
 
