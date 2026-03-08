@@ -1,0 +1,197 @@
+@page "/docs/getting-started"
+
+<PageTitle>Getting Started - Lucazor</PageTitle>
+
+<div class="space-y-10">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight">Getting Started</h1>
+        <p class="text-muted-foreground mt-2 text-lg">
+            Add 1,700+ Lucide icons to your .NET and Blazor projects in minutes.
+        </p>
+    </div>
+
+    @* Installation *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">Installation</h2>
+        <p class="text-muted-foreground">Install the Blazor package via NuGet:</p>
+        <CodeBlock Code="dotnet add package Daeha.RnLucazor.Blazor" FileName="Terminal" />
+        <p class="text-sm text-muted-foreground">
+            If you only need SVG string output without Blazor (for Razor Pages, MVC, etc.), use the core package:
+        </p>
+        <CodeBlock Code="dotnet add package Daeha.RnLucazor" FileName="Terminal" />
+    </section>
+
+    @* Setup *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">Setup</h2>
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <h3 class="text-base font-semibold">1. Register services</h3>
+                <p class="text-sm text-muted-foreground">Add the following to your <code class="text-xs bg-muted px-1.5 py-0.5 rounded">Program.cs</code>:</p>
+                <CodeBlock Code=@("using RnLucazor.Blazor;\n\n// Blazor WASM\nvar builder = WebAssemblyHostBuilder.CreateDefault(args);\nbuilder.Services.AddRnLucazor();\n\n// Blazor Server\nbuilder.Services.AddRnLucazor();") FileName="Program.cs" />
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-base font-semibold">2. Add global imports</h3>
+                <p class="text-sm text-muted-foreground">Add these to your <code class="text-xs bg-muted px-1.5 py-0.5 rounded">_Imports.razor</code>:</p>
+                <CodeBlock Code=@("@using RnLucazor\n@using RnLucazor.Blazor") FileName="_Imports.razor" />
+            </div>
+        </div>
+    </section>
+
+    @* Basic Usage *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">Basic Usage</h2>
+
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <h3 class="text-base font-semibold">Static access (recommended)</h3>
+                <p class="text-sm text-muted-foreground">
+                    Use <code class="text-xs bg-muted px-1.5 py-0.5 rounded">RnIcons.IconName</code> for compile-time safety and IntelliSense:
+                </p>
+                <CodeBlock Code=@_staticUsage />
+            </div>
+
+            <div class="space-y-2">
+                <h3 class="text-base font-semibold">Dynamic name lookup</h3>
+                <p class="text-sm text-muted-foreground">
+                    Use the <code class="text-xs bg-muted px-1.5 py-0.5 rounded">Name</code> parameter for runtime icon selection:
+                </p>
+                <CodeBlock Code=@_dynamicUsage />
+            </div>
+        </div>
+    </section>
+
+    @* Customization *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">Customization</h2>
+        <CodeBlock Code=@_customizationCode />
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-border text-left">
+                        <th class="py-2 pr-4 font-semibold">Parameter</th>
+                        <th class="py-2 pr-4 font-semibold">Type</th>
+                        <th class="py-2 pr-4 font-semibold">Default</th>
+                        <th class="py-2 font-semibold">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var param in _parameters)
+                    {
+                        <tr class="border-b border-border/50">
+                            <td class="py-2 pr-4"><code class="text-xs bg-muted px-1.5 py-0.5 rounded">@param.Name</code></td>
+                            <td class="py-2 pr-4 text-muted-foreground">@param.Type</td>
+                            <td class="py-2 pr-4 text-muted-foreground">@param.Default</td>
+                            <td class="py-2 text-muted-foreground">@param.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    @* Transforms *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">Transforms</h2>
+        <p class="text-muted-foreground">
+            The <code class="text-xs bg-muted px-1.5 py-0.5 rounded">IconTransform</code> struct supports rotation and flipping:
+        </p>
+        <CodeBlock Code=@_transformCode />
+    </section>
+
+    @* Non-Blazor *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">Non-Blazor Usage (SVG string)</h2>
+        <p class="text-muted-foreground">Use the core library to generate raw SVG strings:</p>
+        <CodeBlock Code=@_svgStringCode FileName="Program.cs" />
+    </section>
+
+    <div class="flex justify-end">
+        <a href="/docs/api"
+           class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+            API Reference →
+        </a>
+    </div>
+</div>
+
+@code {
+    private record ParamInfo(string Name, string Type, string Default, string Description);
+
+    private readonly ParamInfo[] _parameters =
+    [
+        new("Icon", "IconData?", "null", "Icon from RnIcons.* static properties"),
+        new("Name", "string?", "null", "Kebab-case icon name for dynamic lookup"),
+        new("Size", "int", "24", "Width and height in pixels"),
+        new("Color", "string", "currentColor", "SVG stroke color"),
+        new("Fill", "string", "none", "SVG fill color"),
+        new("StrokeWidth", "float", "2f", "SVG stroke width"),
+        new("CssClass", "string?", "null", "Additional CSS class"),
+        new("Transform", "IconTransform?", "null", "Rotation / flip transform"),
+    ];
+
+    private const string _staticUsage =
+        """
+        <RnIcon Icon="RnIcons.Activity" />
+        <RnIcon Icon="RnIcons.Heart" Size="32" Color="red" />
+        <RnIcon Icon="RnIcons.AlertCircle" StrokeWidth="1.5f" />
+        """;
+
+    private const string _dynamicUsage =
+        """
+        @* Dynamic - useful for runtime icon selection *@
+        <RnIcon Name="arrow-right" Size="16" />
+        <RnIcon Name="@myIconName" Color="@myColor" />
+        """;
+
+    private const string _customizationCode =
+        """
+        @* Size, color, stroke width *@
+        <RnIcon Icon="RnIcons.Star" Size="32" Color="#f59e0b" StrokeWidth="1.5f" />
+
+        @* Filled icon *@
+        <RnIcon Icon="RnIcons.Heart" Fill="red" Color="red" />
+
+        @* Custom CSS class *@
+        <RnIcon Icon="RnIcons.Loader" CssClass="animate-spin" />
+
+        @* Additional HTML attributes *@
+        <RnIcon Icon="RnIcons.Info" aria-label="Information" title="Click for info" />
+        """;
+
+    private const string _transformCode =
+        """
+        @* Built-in presets *@
+        <RnIcon Icon="RnIcons.ArrowUp" Transform="IconTransform.Rotate90" />
+        <RnIcon Icon="RnIcons.ArrowUp" Transform="IconTransform.Rotate180" />
+        <RnIcon Icon="RnIcons.ArrowUp" Transform="IconTransform.Rotate270" />
+        <RnIcon Icon="RnIcons.ArrowRight" Transform="IconTransform.FlipHorizontal" />
+        <RnIcon Icon="RnIcons.ArrowDown" Transform="IconTransform.FlipVertical" />
+
+        @* Custom angle *@
+        <RnIcon Icon="RnIcons.Navigation" Transform="new IconTransform(Rotate: 45)" />
+        """;
+
+    private const string _svgStringCode =
+        """
+        using RnLucazor;
+
+        // Static access
+        string svg = RnIcons.Activity.ToSvg();
+        string svg2 = RnIcons.Heart.ToSvg(size: 32, stroke: "red", strokeWidth: 1.5f);
+
+        // With SvgRenderOptions
+        var options = new SvgRenderOptions
+        {
+            Size = 24,
+            Stroke = "currentColor",
+            StrokeWidth = 2f,
+            Transform = IconTransform.Rotate90
+        };
+        string svg3 = RnIcons.ArrowUp.ToSvg(options);
+
+        // Name-based lookup
+        var icon = RnIconRegistry.GetIcon("arrow-right");
+        string svg4 = icon?.ToSvg() ?? "";
+        """;
+}

@@ -1,0 +1,140 @@
+@page "/"
+
+<PageTitle>Lucazor - Lucide Icons for Blazor</PageTitle>
+
+<div class="space-y-20">
+
+    @* Hero *@
+    <div class="flex flex-col items-center text-center space-y-6 pt-12 pb-8">
+        <span class="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground">
+            v0.2.0 — 1,700+ Lucide Icons
+        </span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight">
+            Lucide Icons for
+            <br />
+            <span class="text-primary">.NET &amp; Blazor</span>
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-[560px] leading-relaxed">
+            1,700+ beautiful open-source icons as Blazor components.
+            Zero dependencies. Full IntelliSense. Pluggable rendering.
+        </p>
+        <div class="flex gap-4 pt-2 flex-wrap justify-center">
+            <a href="/icons"
+               class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground px-6 py-2.5 text-sm font-medium hover:opacity-90 transition-opacity">
+                Browse Icons
+            </a>
+            <a href="/docs/getting-started"
+               class="inline-flex items-center justify-center rounded-md border border-border px-6 py-2.5 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors">
+                Get Started
+            </a>
+        </div>
+    </div>
+
+    @* Install command *@
+    <div class="flex justify-center">
+        <CodeBlock Code="dotnet add package Daeha.RnLucazor.Blazor" FileName="Terminal" />
+    </div>
+
+    @* Stats *@
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="space-y-1">
+            <p class="text-3xl font-bold">1,700+</p>
+            <p class="text-sm text-muted-foreground">Icons</p>
+        </div>
+        <div class="space-y-1">
+            <p class="text-3xl font-bold">0</p>
+            <p class="text-sm text-muted-foreground">Dependencies</p>
+        </div>
+        <div class="space-y-1">
+            <p class="text-3xl font-bold">3</p>
+            <p class="text-sm text-muted-foreground">Target Frameworks</p>
+        </div>
+        <div class="space-y-1">
+            <p class="text-3xl font-bold">100%</p>
+            <p class="text-sm text-muted-foreground">Type Safe</p>
+        </div>
+    </div>
+
+    @* Features *@
+    <div class="space-y-6">
+        <h2 class="text-2xl font-semibold tracking-tight">Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach (var feature in _features)
+            {
+                <div class="rounded-lg border border-border p-6 space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 text-primary">
+                            @((MarkupString)feature.IconSvg)
+                        </div>
+                        <h3 class="font-semibold">@feature.Title</h3>
+                    </div>
+                    <p class="text-sm text-muted-foreground leading-relaxed">@feature.Description</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    @* Quick Start *@
+    <div class="space-y-6">
+        <h2 class="text-2xl font-semibold tracking-tight">Quick Start</h2>
+        <div class="space-y-4">
+            <div class="space-y-2">
+                <p class="text-sm font-medium">1. Install the package</p>
+                <CodeBlock Code="dotnet add package Daeha.RnLucazor.Blazor" FileName="Terminal" />
+            </div>
+            <div class="space-y-2">
+                <p class="text-sm font-medium">2. Register services in Program.cs</p>
+                <CodeBlock Code=@("builder.Services.AddRnLucazor();") FileName="Program.cs" />
+            </div>
+            <div class="space-y-2">
+                <p class="text-sm font-medium">3. Add imports in _Imports.razor</p>
+                <CodeBlock Code=@("@using RnLucazor\n@using RnLucazor.Blazor") FileName="_Imports.razor" />
+            </div>
+            <div class="space-y-2">
+                <p class="text-sm font-medium">4. Use icons in your components</p>
+                <CodeBlock Code=@_usageCode FileName="MyComponent.razor" />
+            </div>
+        </div>
+
+        <div class="flex justify-start pt-4">
+            <a href="/docs/getting-started"
+               class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+                Read the full documentation →
+            </a>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private record Feature(string Title, string Description, string IconSvg);
+
+    private readonly Feature[] _features =
+    [
+        new("IntelliSense", "Strongly-typed access via RnIcons.IconName with full IntelliSense and compile-time safety.",
+            """<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>"""),
+        new("Zero Dependencies", "The core package targets netstandard2.0 with zero runtime dependencies.",
+            """<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>"""),
+        new("Blazor Component", "Use &lt;RnIcon&gt; in any Blazor Server, WebAssembly, or Hybrid app.",
+            """<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6"/><path d="M9 12h6"/><path d="M9 15h4"/></svg>"""),
+        new("Icon Transforms", "Rotate and flip icons with built-in transforms like Rotate90, FlipHorizontal.",
+            """<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>"""),
+        new("Pluggable Rendering", "Implement ISvgRenderer for WPF, MAUI, PDF, or any custom rendering target.",
+            """<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>"""),
+        new("DI & Testing", "IIconProvider interface makes the library fully DI-friendly and testable.",
+            """<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>"""),
+    ];
+
+    private const string _usageCode =
+        """
+        @* Static access with IntelliSense *@
+        <RnIcon Icon="RnIcons.Activity" />
+        <RnIcon Icon="RnIcons.Heart" Size="32" Color="red" />
+
+        @* Dynamic name lookup *@
+        <RnIcon Name="arrow-right" Size="16" />
+
+        @* With transform *@
+        <RnIcon Icon="RnIcons.ArrowUp" Transform="IconTransform.Rotate90" />
+        """;
+}

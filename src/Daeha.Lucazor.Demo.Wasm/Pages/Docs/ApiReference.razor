@@ -1,0 +1,279 @@
+@page "/docs/api"
+
+<PageTitle>API Reference - Lucazor</PageTitle>
+
+<div class="space-y-10">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight">API Reference</h1>
+        <p class="text-muted-foreground mt-2">
+            Complete API reference for the Lucazor library.
+        </p>
+    </div>
+
+    @* RnIcon Component *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">RnIcon Component</h2>
+        <p class="text-muted-foreground">
+            The main Blazor component for rendering icons. Requires <code class="text-xs bg-muted px-1.5 py-0.5 rounded">Daeha.RnLucazor.Blazor</code>.
+        </p>
+        <CodeBlock Code=@("<RnIcon Icon=\"RnIcons.Activity\" Size=\"24\" Color=\"currentColor\" />") />
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-border text-left">
+                        <th class="py-2 pr-4 font-semibold">Parameter</th>
+                        <th class="py-2 pr-4 font-semibold">Type</th>
+                        <th class="py-2 pr-4 font-semibold">Default</th>
+                        <th class="py-2 font-semibold">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in _componentParams)
+                    {
+                        <tr class="border-b border-border/50">
+                            <td class="py-2 pr-4"><code class="text-xs bg-muted px-1.5 py-0.5 rounded">@row[0]</code></td>
+                            <td class="py-2 pr-4 font-mono text-xs text-muted-foreground">@row[1]</td>
+                            <td class="py-2 pr-4 text-muted-foreground">@row[2]</td>
+                            <td class="py-2 text-muted-foreground">@row[3]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    @* RnIcons *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">RnIcons (Static Registry)</h2>
+        <p class="text-muted-foreground">
+            Static class providing compile-time access to all 1,700+ icons with full IntelliSense support.
+        </p>
+        <CodeBlock Code=@_rnIconsCode FileName="Usage" />
+    </section>
+
+    @* RnIconRegistry *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">RnIconRegistry</h2>
+        <p class="text-muted-foreground">
+            Static registry for name-based (kebab-case) icon lookup without DI.
+        </p>
+        <CodeBlock Code=@_registryCode FileName="Usage" />
+    </section>
+
+    @* IIconProvider *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">IIconProvider (DI)</h2>
+        <p class="text-muted-foreground">
+            DI-friendly interface registered by <code class="text-xs bg-muted px-1.5 py-0.5 rounded">AddRnLucazor()</code>.
+            Use this in services and components for testability.
+        </p>
+        <CodeBlock Code=@_providerCode FileName="MyService.cs" />
+
+        <h3 class="text-base font-semibold mt-4">Custom Icon Provider</h3>
+        <p class="text-muted-foreground text-sm">Register additional icons via the configure callback:</p>
+        <CodeBlock Code=@_customProviderCode FileName="Program.cs" />
+    </section>
+
+    @* ISvgRenderer *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">ISvgRenderer</h2>
+        <p class="text-muted-foreground">
+            Pluggable rendering interface for custom targets (WPF, MAUI, PDF, etc.).
+        </p>
+        <CodeBlock Code=@_rendererCode FileName="MyRenderer.cs" />
+    </section>
+
+    @* IconTransform *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">IconTransform</h2>
+        <p class="text-muted-foreground">
+            Struct for applying rotation and flip transforms to icons.
+        </p>
+        <CodeBlock Code=@_transformCode FileName="Usage" />
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-border text-left">
+                        <th class="py-2 pr-4 font-semibold">Preset</th>
+                        <th class="py-2 font-semibold">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var preset in _transformPresets)
+                    {
+                        <tr class="border-b border-border/50">
+                            <td class="py-2 pr-4"><code class="text-xs bg-muted px-1.5 py-0.5 rounded">IconTransform.@preset.Name</code></td>
+                            <td class="py-2 text-muted-foreground">@preset.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    @* SvgRenderOptions *@
+    <section class="space-y-4">
+        <h2 class="text-2xl font-semibold tracking-tight border-b border-border pb-2">SvgRenderOptions</h2>
+        <p class="text-muted-foreground">
+            Full customization options for SVG string rendering (used with the core package).
+        </p>
+        <CodeBlock Code=@_renderOptionsCode FileName="Usage" />
+    </section>
+
+    <div class="flex justify-start pt-2">
+        <a href="/docs/getting-started"
+           class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+            ← Getting Started
+        </a>
+    </div>
+</div>
+
+@code {
+    private readonly string[][] _componentParams =
+    [
+        ["Icon", "IconData?", "null", "Icon data from RnIcons.* static properties (priority over Name)"],
+        ["Name", "string?", "null", "Kebab-case icon name for dynamic DI-based lookup"],
+        ["Size", "int", "24", "Width and height of the icon in pixels"],
+        ["Color", "string", "currentColor", "SVG stroke color (CSS color value)"],
+        ["Fill", "string", "none", "SVG fill color"],
+        ["StrokeWidth", "float", "2f", "SVG stroke-width value"],
+        ["CssClass", "string?", "null", "Additional CSS class applied to the SVG element"],
+        ["Transform", "IconTransform?", "null", "Rotation and/or flip transform to apply"],
+        ["AdditionalAttributes", "Dictionary<string, object>?", "null", "Unmatched HTML attributes passed to the SVG element"],
+    ];
+
+    private record TransformPreset(string Name, string Description);
+
+    private readonly TransformPreset[] _transformPresets =
+    [
+        new("None", "No transform (default)"),
+        new("Rotate90", "Rotate 90 degrees clockwise"),
+        new("Rotate180", "Rotate 180 degrees"),
+        new("Rotate270", "Rotate 270 degrees clockwise (= 90° counter-clockwise)"),
+        new("FlipHorizontal", "Flip horizontally (mirror on Y axis)"),
+        new("FlipVertical", "Flip vertically (mirror on X axis)"),
+    ];
+
+    private const string _rnIconsCode =
+        """
+        // Access any of 1,700+ icons with IntelliSense
+        IconData icon = RnIcons.Activity;
+        IconData icon2 = RnIcons.HeartHandshake;
+
+        // Generate SVG string (core package)
+        string svg = RnIcons.Activity.ToSvg();
+        string svg2 = RnIcons.Heart.ToSvg(size: 32, stroke: "red");
+
+        // Use in Blazor component
+        <RnIcon Icon="RnIcons.Activity" />
+        """;
+
+    private const string _registryCode =
+        """
+        // Name-based lookup (case-insensitive, kebab-case)
+        IconData? icon = RnIconRegistry.GetIcon("arrow-right");
+        IconData? icon2 = RnIconRegistry.GetIcon("heart-handshake");
+
+        // Get all icon names
+        IEnumerable<string> names = RnIconRegistry.GetIconNames();
+
+        // Total count
+        int count = RnIconRegistry.Count; // ~1700
+        """;
+
+    private const string _providerCode =
+        """
+        public class IconSearchService
+        {
+            private readonly IIconProvider _icons;
+
+            public IconSearchService(IIconProvider icons)
+            {
+                _icons = icons;
+            }
+
+            public IEnumerable<string> Search(string query)
+                => _icons.GetIconNames()
+                         .Where(n => n.Contains(query, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // Inject in Blazor component
+        @inject IIconProvider IconProvider
+
+        @code {
+            protected override void OnInitialized()
+            {
+                var names = IconProvider.GetIconNames();
+                int total = IconProvider.Count;
+            }
+        }
+        """;
+
+    private const string _customProviderCode =
+        """
+        // Add custom icons alongside built-in icons
+        builder.Services.AddRnLucazor(provider =>
+        {
+            provider.Register("my-logo", new IconData("my-logo",
+            [
+                new IconElement("path", new Dictionary<string, string>
+                {
+                    ["d"] = "M12 2L2 7l10 5 10-5-10-5z"
+                })
+            ]));
+        });
+        """;
+
+    private const string _rendererCode =
+        """
+        public class MyCustomRenderer : ISvgRenderer
+        {
+            public string Render(IconData icon, SvgRenderOptions? options = null)
+            {
+                options ??= new SvgRenderOptions();
+                // Your custom rendering logic here
+                return $"<svg>...</svg>";
+            }
+        }
+
+        // Register in DI
+        builder.Services.AddRnLucazor();
+        builder.Services.AddSingleton<ISvgRenderer, MyCustomRenderer>();
+        """;
+
+    private const string _transformCode =
+        """
+        // Use built-in presets
+        <RnIcon Icon="RnIcons.ArrowUp" Transform="IconTransform.Rotate90" />
+        <RnIcon Icon="RnIcons.ArrowRight" Transform="IconTransform.FlipHorizontal" />
+
+        // Custom angle (degrees)
+        var diagonal = new IconTransform(Rotate: 45);
+        <RnIcon Icon="RnIcons.Navigation" Transform="@diagonal" />
+
+        // Combine flip and rotate
+        var custom = new IconTransform(Rotate: 90, FlipX: true);
+        <RnIcon Icon="RnIcons.Arrow" Transform="@custom" />
+        """;
+
+    private const string _renderOptionsCode =
+        """
+        var options = new SvgRenderOptions
+        {
+            Size = 32,
+            Stroke = "#6366f1",
+            Fill = "none",
+            StrokeWidth = 1.5f,
+            CssClass = "my-icon",
+            Transform = IconTransform.Rotate90,
+            Attributes = new Dictionary<string, string>
+            {
+                ["aria-label"] = "Activity icon"
+            }
+        };
+
+        string svg = RnIcons.Activity.ToSvg(options);
+        """;
+}

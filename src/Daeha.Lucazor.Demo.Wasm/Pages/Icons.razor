@@ -1,0 +1,176 @@
+@page "/icons"
+@inject IIconProvider IconProvider
+@inject IJSRuntime JS
+
+<PageTitle>Icon Gallery - Lucazor</PageTitle>
+
+<div class="space-y-6">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight">Icon Gallery</h1>
+        <p class="text-muted-foreground mt-1">@IconProvider.Count icons available. Click any icon to copy usage code.</p>
+    </div>
+
+    @* Search + Customization *@
+    <div class="flex flex-col gap-4 rounded-lg border border-border p-4 bg-card">
+        <div class="flex flex-col sm:flex-row gap-3">
+            @* Search *@
+            <div class="flex-1 relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text"
+                       placeholder="Search icons..."
+                       value="@_searchQuery"
+                       @oninput="OnSearchChanged"
+                       class="w-full pl-9 pr-4 py-2 text-sm rounded-md border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
+            </div>
+            @* Transform *@
+            <select @bind="_transform"
+                    class="px-3 py-2 text-sm rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-ring">
+                <option value="None">No Transform</option>
+                <option value="Rotate90">Rotate 90°</option>
+                <option value="Rotate180">Rotate 180°</option>
+                <option value="Rotate270">Rotate 270°</option>
+                <option value="FlipHorizontal">Flip H</option>
+                <option value="FlipVertical">Flip V</option>
+            </select>
+        </div>
+
+        <div class="flex flex-wrap gap-4 items-center">
+            @* Size *@
+            <div class="flex items-center gap-2 min-w-[200px]">
+                <label class="text-xs text-muted-foreground w-12">Size: @_size</label>
+                <input type="range" min="12" max="64" step="4"
+                       @bind="_size" @bind:event="oninput"
+                       class="flex-1 h-1.5 appearance-none rounded-full bg-border cursor-pointer" />
+            </div>
+            @* Stroke *@
+            <div class="flex items-center gap-2 min-w-[200px]">
+                <label class="text-xs text-muted-foreground w-16">Stroke: @_strokeWidth.ToString("0.0")</label>
+                <input type="range" min="0.5" max="4" step="0.5"
+                       @bind="_strokeWidth" @bind:event="oninput"
+                       class="flex-1 h-1.5 appearance-none rounded-full bg-border cursor-pointer" />
+            </div>
+            @* Color *@
+            <div class="flex items-center gap-2">
+                <label class="text-xs text-muted-foreground">Color:</label>
+                <input type="color" @bind="_color"
+                       class="h-8 w-8 rounded cursor-pointer border border-border" />
+                <span class="text-xs text-muted-foreground">@_color</span>
+            </div>
+        </div>
+
+        <div class="text-xs text-muted-foreground">
+            Showing @_filteredIcons.Count of @IconProvider.Count icons
+        </div>
+    </div>
+
+    @* Icon Grid *@
+    @if (_filteredIcons.Count == 0)
+    {
+        <div class="flex flex-col items-center justify-center py-20 space-y-3 text-muted-foreground">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <p class="text-sm">No icons found for "@_searchQuery"</p>
+        </div>
+    }
+    else
+    {
+        <div class="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-2">
+            @foreach (var name in _filteredIcons)
+            {
+                var iconName = name;
+                <button @onclick="() => CopyIconCode(iconName)"
+                        @onclick:stopPropagation="true"
+                        class="group relative flex flex-col items-center justify-center gap-2 rounded-lg border border-border p-4 hover:bg-accent hover:border-accent-foreground/20 transition-colors cursor-pointer text-center @(_copiedIcon == iconName ? "border-primary" : "")">
+                    <RnIcon Name="@iconName"
+                            Size="@_size"
+                            Color="@(_color)"
+                            StrokeWidth="@_strokeWidth"
+                            Transform="@GetTransform()" />
+                    <span class="text-[10px] text-muted-foreground group-hover:text-foreground leading-tight break-all transition-colors">
+                        @iconName
+                    </span>
+                    @if (_copiedIcon == iconName)
+                    {
+                        <div class="absolute inset-0 flex items-center justify-center rounded-lg bg-primary/10 text-primary text-xs font-medium">
+                            Copied!
+                        </div>
+                    }
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private string _searchQuery = "";
+    private int _size = 24;
+    private float _strokeWidth = 2f;
+    private string _color = "#ffffff";
+    private string _transform = "None";
+    private string? _copiedIcon;
+
+    private List<string> _allIconNames = [];
+    private List<string> _filteredIcons = [];
+
+    protected override void OnInitialized()
+    {
+        _allIconNames = IconProvider.GetIconNames().OrderBy(n => n).ToList();
+        _filteredIcons = _allIconNames;
+    }
+
+    private void OnSearchChanged(ChangeEventArgs e)
+    {
+        _searchQuery = e.Value?.ToString() ?? "";
+        FilterIcons();
+    }
+
+    private void FilterIcons()
+    {
+        if (string.IsNullOrWhiteSpace(_searchQuery))
+        {
+            _filteredIcons = _allIconNames;
+        }
+        else
+        {
+            var query = _searchQuery.Trim().ToLowerInvariant();
+            _filteredIcons = _allIconNames
+                .Where(n => n.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+    }
+
+    private IconTransform? GetTransform() => _transform switch
+    {
+        "Rotate90" => IconTransform.Rotate90,
+        "Rotate180" => IconTransform.Rotate180,
+        "Rotate270" => IconTransform.Rotate270,
+        "FlipHorizontal" => IconTransform.FlipHorizontal,
+        "FlipVertical" => IconTransform.FlipVertical,
+        _ => null
+    };
+
+    private async Task CopyIconCode(string name)
+    {
+        var transformPart = _transform != "None" ? $" Transform=\"IconTransform.{_transform}\"" : "";
+        var sizePart = _size != 24 ? $" Size=\"{_size}\"" : "";
+        var colorPart = _color != "#ffffff" ? $" Color=\"{_color}\"" : "";
+        var strokePart = Math.Abs(_strokeWidth - 2f) > 0.01f ? $" StrokeWidth=\"{_strokeWidth}f\"" : "";
+
+        // Convert kebab-case to PascalCase for RnIcons property
+        var pascalName = string.Concat(name.Split('-').Select(w => char.ToUpperInvariant(w[0]) + w[1..]));
+        var code = $"<RnIcon Icon=\"RnIcons.{pascalName}\"{sizePart}{colorPart}{strokePart}{transformPart} />";
+
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", code);
+        _copiedIcon = name;
+        StateHasChanged();
+        await Task.Delay(2000);
+        _copiedIcon = null;
+        StateHasChanged();
+    }
+}
