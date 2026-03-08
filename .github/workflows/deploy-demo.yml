@@ -33,11 +33,10 @@ jobs:
 
       - name: Install Tailwind CSS
         working-directory: src/Daeha.Lucazor.Demo.Wasm
-        run: npm install
-
-      - name: Build Tailwind CSS
-        working-directory: src/Daeha.Lucazor.Demo.Wasm
-        run: npm run build:css
+        run: |
+          npm install
+          find node_modules -type f -name "tailwindcss" -exec chmod +x {} \; || true
+          chmod -R +x node_modules/.bin/ || true
 
       - name: Publish WASM app
         run: |
