@@ -101,7 +101,7 @@
                         class="group relative flex flex-col items-center justify-center gap-2 rounded-lg border border-border p-4 hover:bg-accent hover:border-accent-foreground/20 transition-colors cursor-pointer text-center @(_copiedIcon == iconName ? "border-primary" : "")">
                     <RnIcon Name="@iconName"
                             Size="@_size"
-                            Color="@(_useCustomColor ? _customColor : "")"
+                            Color="@(_useCustomColor ? _customColor : "currentColor")"
                             StrokeWidth="@_strokeWidth"
                             Transform="@GetTransform()" />
                     <span class="text-[10px] text-muted-foreground group-hover:text-foreground leading-tight break-all transition-colors">
