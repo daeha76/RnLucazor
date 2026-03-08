@@ -4,3 +4,4 @@ obj/
 *.user
 EOF
 nupkgs/
+node_modules/
