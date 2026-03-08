@@ -56,9 +56,21 @@
             @* Color *@
             <div class="flex items-center gap-2">
                 <label class="text-xs text-muted-foreground">Color:</label>
-                <input type="color" @bind="_color"
-                       class="h-8 w-8 rounded cursor-pointer border border-border" />
-                <span class="text-xs text-muted-foreground">@_color</span>
+                <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                    <input type="checkbox" @bind="_useCustomColor"
+                           class="rounded accent-primary" />
+                    <span class="text-xs text-muted-foreground">Custom</span>
+                </label>
+                @if (_useCustomColor)
+                {
+                    <input type="color" @bind="_customColor"
+                           class="h-8 w-8 rounded cursor-pointer border border-border" />
+                    <span class="text-xs text-muted-foreground font-mono">@_customColor</span>
+                }
+                else
+                {
+                    <span class="text-xs text-muted-foreground italic">auto</span>
+                }
             </div>
         </div>
 
@@ -89,7 +101,7 @@
                         class="group relative flex flex-col items-center justify-center gap-2 rounded-lg border border-border p-4 hover:bg-accent hover:border-accent-foreground/20 transition-colors cursor-pointer text-center @(_copiedIcon == iconName ? "border-primary" : "")">
                     <RnIcon Name="@iconName"
                             Size="@_size"
-                            Color="@(_color)"
+                            Color="@(_useCustomColor ? _customColor : "")"
                             StrokeWidth="@_strokeWidth"
                             Transform="@GetTransform()" />
                     <span class="text-[10px] text-muted-foreground group-hover:text-foreground leading-tight break-all transition-colors">
@@ -111,7 +123,8 @@
     private string _searchQuery = "";
     private int _size = 24;
     private float _strokeWidth = 2f;
-    private string _color = "#ffffff";
+    private bool _useCustomColor = false;
+    private string _customColor = "#6366f1";
     private string _transform = "None";
     private string? _copiedIcon;
 
@@ -159,7 +172,7 @@
     {
         var transformPart = _transform != "None" ? $" Transform=\"IconTransform.{_transform}\"" : "";
         var sizePart = _size != 24 ? $" Size=\"{_size}\"" : "";
-        var colorPart = _color != "#ffffff" ? $" Color=\"{_color}\"" : "";
+        var colorPart = _useCustomColor ? $" Color=\"{_customColor}\"" : "";
         var strokePart = Math.Abs(_strokeWidth - 2f) > 0.01f ? $" StrokeWidth=\"{_strokeWidth}f\"" : "";
 
         // Convert kebab-case to PascalCase for RnIcons property
