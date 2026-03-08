@@ -112,22 +112,36 @@
         .feature-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
         .feature-card p { color: var(--text-muted); font-size: 0.92rem; }
 
-        /* Code example */
-        .code-section { padding: 80px 0; }
-        .code-tabs { display: flex; gap: 4px; margin-bottom: 0; }
-        .code-tab {
-            padding: 10px 20px; background: var(--bg-card); border: 1px solid var(--border);
-            border-bottom: none; border-radius: 8px 8px 0 0; cursor: pointer;
-            color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+        /* Usage sections */
+        .usage-section { padding: 40px 0; }
+        .usage-section:first-of-type { padding-top: 80px; }
+        .usage-block {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 36px; margin-bottom: 32px;
         }
-        .code-tab.active { background: var(--bg-code); color: var(--accent); border-color: var(--accent); border-bottom: 1px solid var(--bg-code); }
+        .usage-block h3 {
+            font-size: 1.3rem; margin-bottom: 6px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .usage-block h3 .step-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; border-radius: 8px;
+            background: var(--primary); color: #fff; font-size: 0.85rem; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .usage-block .desc {
+            color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; margin-left: 44px;
+        }
+        .usage-block .desc code {
+            background: var(--bg-code); padding: 2px 6px; border-radius: 4px;
+            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem;
+        }
         .code-block {
             background: var(--bg-code); border: 1px solid var(--border);
-            border-radius: 0 12px 12px 12px; padding: 24px; overflow-x: auto;
-            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.88rem;
-            line-height: 1.7; display: none;
+            border-radius: 12px; padding: 24px; overflow-x: auto;
+            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.86rem;
+            line-height: 1.75;
         }
-        .code-block.active { display: block; }
         .code-block .kw { color: #c678dd; }
         .code-block .str { color: #98c379; }
         .code-block .cm { color: #5c6370; font-style: italic; }
@@ -135,6 +149,38 @@
         .code-block .tp { color: #e5c07b; }
         .code-block .tag { color: #e06c75; }
         .code-block .attr { color: #d19a66; }
+        .code-block .num { color: #d19a66; }
+        .code-label {
+            display: inline-block; padding: 4px 12px; border-radius: 6px;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 10px;
+        }
+        .code-label-cs { background: rgba(99,102,241,0.15); color: var(--accent); }
+        .code-label-razor { background: rgba(52,211,153,0.15); color: var(--green); }
+        .code-label-config { background: rgba(251,146,60,0.15); color: var(--orange); }
+        .param-table {
+            width: 100%; border-collapse: collapse; margin-top: 16px;
+            font-size: 0.88rem;
+        }
+        .param-table th {
+            text-align: left; padding: 10px 14px;
+            background: var(--bg-code); border-bottom: 2px solid var(--border);
+            color: var(--accent); font-weight: 600;
+        }
+        .param-table td {
+            padding: 10px 14px; border-bottom: 1px solid var(--border);
+        }
+        .param-table td:first-child {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-weight: 600; white-space: nowrap;
+        }
+        .param-table td:nth-child(2) {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: var(--accent); font-size: 0.82rem;
+        }
+        .param-table td:last-child { color: var(--text-muted); }
+        .code-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 768px) { .code-split { grid-template-columns: 1fr; } }
 
         /* Architecture */
         .arch-section { padding: 80px 0; }
@@ -180,7 +226,7 @@
         <div class="logo">Rn<span>Lucazor</span></div>
         <div class="links">
             <a href="#features">Features</a>
-            <a href="#usage">Usage</a>
+            <a href="#usage">Usage Guide</a>
             <a href="#architecture">Architecture</a>
             <a href="https://github.com/daeha76/RnLucazor">GitHub</a>
             <a href="https://www.nuget.org/packages/Daeha.RnLucazor">NuGet</a>
@@ -265,62 +311,263 @@
     </div>
 </section>
 
-<!-- Code Examples -->
-<section class="code-section" id="usage">
+<!-- Usage Guide -->
+<section id="usage" style="padding: 80px 0 0;">
     <div class="container">
-        <h2 class="section-title">Quick Start</h2>
-        <p class="section-sub">Get up and running in minutes</p>
-        <div class="code-tabs">
-            <div class="code-tab active" onclick="switchTab(0)">C# / .NET</div>
-            <div class="code-tab" onclick="switchTab(1)">Blazor</div>
-            <div class="code-tab" onclick="switchTab(2)">Advanced</div>
-        </div>
-        <pre class="code-block active"><span class="kw">using</span> <span class="tp">RnLucazor</span>;
+        <h2 class="section-title">Usage Guide</h2>
+        <p class="section-sub">Step-by-step guide to using RnLucazor in your project</p>
+    </div>
+</section>
+
+<!-- 1. Basic SVG Output -->
+<section class="usage-section">
+    <div class="container">
+        <div class="usage-block">
+            <h3><span class="step-num">1</span> Basic SVG Output</h3>
+            <p class="desc">Any .NET app can use <code>RnIcons</code> to get SVG strings. Compile-time safe with full IntelliSense.</p>
+            <div class="code-label code-label-cs">C#</div>
+<pre class="code-block"><span class="kw">using</span> <span class="tp">RnLucazor</span>;
 
 <span class="cm">// Static access — compile-time safe, with full IntelliSense</span>
 <span class="kw">var</span> svg = <span class="tp">RnIcons</span>.<span class="fn">Activity</span>.<span class="fn">ToSvg</span>();
-<span class="kw">var</span> svg2 = <span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(size: <span class="attr">32</span>, stroke: <span class="str">"red"</span>);
 
-<span class="cm">// Dynamic lookup by name (auto-initializes on first call)</span>
-<span class="kw">var</span> icon = <span class="tp">RnIconRegistry</span>.<span class="fn">GetIcon</span>(<span class="str">"activity"</span>);
+<span class="cm">// With inline parameters: size, stroke color, stroke width</span>
+<span class="kw">var</span> svg2 = <span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(size: <span class="num">32</span>, stroke: <span class="str">"red"</span>, strokeWidth: <span class="num">1.5f</span>);
+
+<span class="cm">// Dynamic lookup by kebab-case name (auto-initializes on first call)</span>
+<span class="kw">var</span> icon = <span class="tp">RnIconRegistry</span>.<span class="fn">GetIcon</span>(<span class="str">"arrow-right"</span>);
 Console.<span class="fn">WriteLine</span>(icon?.<span class="fn">ToSvg</span>());
 
-<span class="cm">// List all available icons</span>
+<span class="cm">// List all 1700+ available icon names</span>
 <span class="kw">foreach</span> (<span class="kw">var</span> name <span class="kw">in</span> <span class="tp">RnIconRegistry</span>.<span class="fn">GetIconNames</span>())
+    Console.<span class="fn">WriteLine</span>(name);</pre>
+
+            <table class="param-table">
+                <tr><th>Icon Naming Convention</th><th>SVG Filename</th><th>C# Property</th></tr>
+                <tr><td>activity.svg</td><td>activity</td><td>RnIcons.Activity</td></tr>
+                <tr><td>arrow-right.svg</td><td>arrow-right</td><td>RnIcons.ArrowRight</td></tr>
+                <tr><td>circle-dot.svg</td><td>circle-dot</td><td>RnIcons.CircleDot</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Advanced SvgRenderOptions -->
+<section class="usage-section">
+    <div class="container">
+        <div class="usage-block">
+            <h3><span class="step-num">2</span> Advanced SVG Rendering</h3>
+            <p class="desc"><code>SvgRenderOptions</code> gives you full control over size, color, fill, stroke, CSS class, custom attributes, and transforms.</p>
+            <div class="code-label code-label-cs">C#</div>
+<pre class="code-block"><span class="kw">var</span> svg = <span class="tp">RnIcons</span>.<span class="fn">Heart</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span>
 {
-    Console.<span class="fn">WriteLine</span>(name);
-}</pre>
-        <pre class="code-block"><span class="cm">@* Register in Program.cs *@</span>
-builder.Services.<span class="fn">AddRnLucazor</span>();
+    Size          = <span class="num">48</span>,
+    Stroke        = <span class="str">"#ff0000"</span>,
+    Fill          = <span class="str">"pink"</span>,
+    StrokeWidth   = <span class="num">1.5f</span>,
+    StrokeLineCap = <span class="str">"round"</span>,    <span class="cm">// default: "round"</span>
+    StrokeLineJoin= <span class="str">"round"</span>,    <span class="cm">// default: "round"</span>
+    CssClass      = <span class="str">"icon-heart"</span>,
+    Transform     = <span class="tp">IconTransform</span>.Rotate90,
+    Attributes    = <span class="kw">new</span> <span class="tp">Dictionary</span>&lt;<span class="kw">string</span>, <span class="kw">string</span>&gt;
+    {
+        { <span class="str">"data-testid"</span>, <span class="str">"heart-icon"</span> },
+        { <span class="str">"aria-hidden"</span>, <span class="str">"true"</span> },
+    }
+});</pre>
 
-<span class="cm">@* Add to _Imports.razor *@</span>
-<span class="tag">@using</span> <span class="tp">RnLucazor</span>
-<span class="tag">@using</span> <span class="tp">RnLucazor.Blazor</span>
+            <table class="param-table">
+                <tr><th>Property</th><th>Type</th><th>Default</th></tr>
+                <tr><td>Size</td><td>int</td><td>24</td></tr>
+                <tr><td>Stroke</td><td>string</td><td>"currentColor"</td></tr>
+                <tr><td>Fill</td><td>string</td><td>"none"</td></tr>
+                <tr><td>StrokeWidth</td><td>float</td><td>2f</td></tr>
+                <tr><td>StrokeLineCap</td><td>string</td><td>"round"</td></tr>
+                <tr><td>StrokeLineJoin</td><td>string</td><td>"round"</td></tr>
+                <tr><td>CssClass</td><td>string?</td><td>null</td></tr>
+                <tr><td>Attributes</td><td>Dictionary?</td><td>null</td></tr>
+                <tr><td>Transform</td><td>IconTransform?</td><td>null</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
 
-<span class="cm">@* Use in your components *@</span>
+<!-- 3. Icon Transforms -->
+<section class="usage-section">
+    <div class="container">
+        <div class="usage-block">
+            <h3><span class="step-num">3</span> Icon Transforms</h3>
+            <p class="desc">Rotate and flip icons with built-in presets or custom angles. Transforms apply via SVG <code>transform</code> attribute.</p>
+            <div class="code-label code-label-cs">C#</div>
+<pre class="code-block"><span class="cm">// Built-in presets</span>
+<span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span> { Transform = <span class="tp">IconTransform</span>.Rotate90 });
+<span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span> { Transform = <span class="tp">IconTransform</span>.Rotate180 });
+<span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span> { Transform = <span class="tp">IconTransform</span>.Rotate270 });
+<span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span> { Transform = <span class="tp">IconTransform</span>.FlipHorizontal });
+<span class="tp">RnIcons</span>.<span class="fn">ArrowRight</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span> { Transform = <span class="tp">IconTransform</span>.FlipVertical });
+
+<span class="cm">// Custom angle + flip combination</span>
+<span class="kw">var</span> transform = <span class="kw">new</span> <span class="tp">IconTransform</span> { Rotate = <span class="num">45</span>, FlipX = <span class="kw">true</span> };
+<span class="tp">RnIcons</span>.<span class="fn">Star</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span> { Transform = transform });</pre>
+
+            <table class="param-table">
+                <tr><th>Preset</th><th>Description</th><th>SVG transform</th></tr>
+                <tr><td>IconTransform.None</td><td>No transform</td><td>&mdash;</td></tr>
+                <tr><td>IconTransform.Rotate90</td><td>90&deg; clockwise</td><td>rotate(90 12 12)</td></tr>
+                <tr><td>IconTransform.Rotate180</td><td>180&deg;</td><td>rotate(180 12 12)</td></tr>
+                <tr><td>IconTransform.Rotate270</td><td>270&deg; clockwise</td><td>rotate(270 12 12)</td></tr>
+                <tr><td>IconTransform.FlipHorizontal</td><td>Mirror horizontally</td><td>scale(-1 1) translate(-24 0)</td></tr>
+                <tr><td>IconTransform.FlipVertical</td><td>Mirror vertically</td><td>scale(1 -1) translate(0 -24)</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 4. Blazor Component -->
+<section class="usage-section">
+    <div class="container">
+        <div class="usage-block">
+            <h3><span class="step-num">4</span> Blazor Component</h3>
+            <p class="desc"><code>&lt;RnIcon&gt;</code> component with DI support. Supports <code>net8.0</code>, <code>net9.0</code>, <code>net10.0</code> (Server, WebAssembly, Hybrid).</p>
+
+            <div class="code-label code-label-config">Step 1: Program.cs</div>
+<pre class="code-block"><span class="kw">using</span> <span class="tp">RnLucazor.Blazor</span>;
+
+builder.Services.<span class="fn">AddRnLucazor</span>();</pre>
+
+            <div class="code-label code-label-config" style="margin-top: 20px;">Step 2: _Imports.razor</div>
+<pre class="code-block"><span class="tag">@using</span> <span class="tp">RnLucazor</span>
+<span class="tag">@using</span> <span class="tp">RnLucazor.Blazor</span></pre>
+
+            <div class="code-label code-label-razor" style="margin-top: 20px;">Step 3: Use in components</div>
+<pre class="code-block"><span class="cm">@* Static reference (compile-time safe, IntelliSense) *@</span>
 <span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.Activity"</span> <span class="tag">/&gt;</span>
-<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.Heart"</span> <span class="attr">Size</span>=<span class="str">"32"</span> <span class="attr">Color</span>=<span class="str">"red"</span> <span class="tag">/&gt;</span>
+
+<span class="cm">@* Size, color, stroke width *@</span>
+<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.Heart"</span> <span class="attr">Size</span>=<span class="str">"32"</span> <span class="attr">Color</span>=<span class="str">"red"</span> <span class="attr">StrokeWidth</span>=<span class="str">"1.5f"</span> <span class="tag">/&gt;</span>
+
+<span class="cm">@* Dynamic lookup by kebab-case name *@</span>
 <span class="tag">&lt;RnIcon</span> <span class="attr">Name</span>=<span class="str">"arrow-right"</span> <span class="attr">Size</span>=<span class="str">"16"</span> <span class="tag">/&gt;</span>
-<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.ArrowUp"</span> <span class="attr">Transform</span>=<span class="str">"IconTransform.Rotate90"</span> <span class="tag">/&gt;</span></pre>
-        <pre class="code-block"><span class="cm">// Full control with SvgRenderOptions</span>
-<span class="kw">var</span> svg = <span class="tp">RnIcons</span>.<span class="fn">Heart</span>.<span class="fn">ToSvg</span>(<span class="kw">new</span> <span class="tp">SvgRenderOptions</span>
+
+<span class="cm">@* With transform *@</span>
+<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.ArrowUp"</span> <span class="attr">Transform</span>=<span class="str">"IconTransform.Rotate90"</span> <span class="tag">/&gt;</span>
+
+<span class="cm">@* CSS class and extra HTML attributes *@</span>
+<span class="tag">&lt;RnIcon</span> <span class="attr">Icon</span>=<span class="str">"RnIcons.Search"</span> <span class="attr">CssClass</span>=<span class="str">"icon-search"</span> <span class="attr">id</span>=<span class="str">"search-icon"</span> <span class="tag">/&gt;</span></pre>
+
+            <table class="param-table">
+                <tr><th>Parameter</th><th>Type</th><th>Default</th></tr>
+                <tr><td>Icon</td><td>IconData?</td><td>null (use Icon or Name)</td></tr>
+                <tr><td>Name</td><td>string?</td><td>null (kebab-case lookup)</td></tr>
+                <tr><td>Size</td><td>int</td><td>24</td></tr>
+                <tr><td>Color</td><td>string</td><td>"currentColor"</td></tr>
+                <tr><td>Fill</td><td>string</td><td>"none"</td></tr>
+                <tr><td>StrokeWidth</td><td>float</td><td>2f</td></tr>
+                <tr><td>CssClass</td><td>string?</td><td>null</td></tr>
+                <tr><td>Transform</td><td>IconTransform?</td><td>null</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Dependency Injection -->
+<section class="usage-section">
+    <div class="container">
+        <div class="usage-block">
+            <h3><span class="step-num">5</span> Dependency Injection</h3>
+            <p class="desc"><code>IIconProvider</code> interface allows DI-based icon access and easy unit testing with mock providers.</p>
+            <div class="code-label code-label-cs">C#</div>
+<pre class="code-block"><span class="kw">public class</span> <span class="tp">MyService</span>
 {
-    Size = <span class="attr">48</span>,
-    Stroke = <span class="str">"#ff0000"</span>,
-    Fill = <span class="str">"pink"</span>,
-    StrokeWidth = <span class="attr">1.5f</span>,
-    CssClass = <span class="str">"icon-heart"</span>,
-    Transform = <span class="tp">IconTransform</span>.Rotate90,
+    <span class="kw">private readonly</span> <span class="tp">IIconProvider</span> _icons;
+
+    <span class="kw">public</span> <span class="fn">MyService</span>(<span class="tp">IIconProvider</span> icons) => _icons = icons;
+
+    <span class="kw">public string</span> <span class="fn">GetIconSvg</span>(<span class="kw">string</span> name)
+    {
+        <span class="kw">var</span> icon = _icons.<span class="fn">GetIcon</span>(name);
+        <span class="kw">return</span> icon?.<span class="fn">ToSvg</span>() ?? <span class="str">""</span>;
+    }
+
+    <span class="kw">public int</span> TotalIcons => _icons.Count;
+
+    <span class="kw">public</span> <span class="tp">IEnumerable</span>&lt;<span class="kw">string</span>&gt; <span class="fn">AllNames</span>()
+        => _icons.<span class="fn">GetIconNames</span>();
+}</pre>
+        </div>
+    </div>
+</section>
+
+<!-- 6. Custom Icons -->
+<section class="usage-section">
+    <div class="container">
+        <div class="usage-block">
+            <h3><span class="step-num">6</span> Custom Icons</h3>
+            <p class="desc">Register your own SVG icons alongside the 1700+ built-in ones using <code>AddRnLucazor</code> callback or <code>RnIconProvider.AddIcon</code>.</p>
+            <div class="code-label code-label-cs">C# &mdash; Blazor DI Registration</div>
+<pre class="code-block"><span class="kw">using</span> <span class="tp">System.Collections.ObjectModel</span>;
+
+builder.Services.<span class="fn">AddRnLucazor</span>(provider =>
+{
+    provider.<span class="fn">AddIcon</span>(<span class="str">"my-logo"</span>, <span class="kw">new</span> <span class="tp">IconData</span>(<span class="str">"my-logo"</span>, <span class="kw">new</span> <span class="tp">IconElement</span>[]
+    {
+        <span class="kw">new</span> <span class="tp">IconElement</span>(<span class="str">"circle"</span>, <span class="kw">new</span> <span class="tp">ReadOnlyDictionary</span>&lt;<span class="kw">string</span>, <span class="kw">string</span>&gt;(
+            <span class="kw">new</span> <span class="tp">Dictionary</span>&lt;<span class="kw">string</span>, <span class="kw">string</span>&gt;
+            {
+                { <span class="str">"cx"</span>, <span class="str">"12"</span> }, { <span class="str">"cy"</span>, <span class="str">"12"</span> }, { <span class="str">"r"</span>, <span class="str">"10"</span> }
+            }))
+    }));
 });
 
-<span class="cm">// Custom renderer for different targets (WPF, MAUI, etc.)</span>
+<span class="cm">// Now use it like any other icon:</span>
+<span class="cm">// &lt;RnIcon Name="my-logo" /&gt;</span></pre>
+
+            <div class="code-label code-label-cs" style="margin-top: 20px;">C# &mdash; Programmatic (non-Blazor)</div>
+<pre class="code-block"><span class="kw">var</span> provider = <span class="kw">new</span> <span class="tp">RnIconProvider</span>();
+provider.<span class="fn">AddIcon</span>(<span class="str">"custom-star"</span>, myIconData);
+
+<span class="cm">// Lookup includes both built-in and custom icons</span>
+<span class="kw">var</span> icon = provider.<span class="fn">GetIcon</span>(<span class="str">"custom-star"</span>);
+<span class="kw">var</span> builtIn = provider.<span class="fn">GetIcon</span>(<span class="str">"heart"</span>);
+
+<span class="cm">// Remove a custom icon</span>
+provider.<span class="fn">RemoveIcon</span>(<span class="str">"custom-star"</span>);</pre>
+        </div>
+    </div>
+</section>
+
+<!-- 7. Custom ISvgRenderer -->
+<section class="usage-section">
+    <div class="container">
+        <div class="usage-block">
+            <h3><span class="step-num">7</span> Custom ISvgRenderer</h3>
+            <p class="desc">Implement <code>ISvgRenderer</code> to render icons to any target platform: WPF, MAUI, SkiaSharp, PDF, etc.</p>
+            <div class="code-label code-label-cs">C#</div>
+<pre class="code-block"><span class="cm">// Implement the interface for your target platform</span>
 <span class="kw">public class</span> <span class="tp">WpfSvgRenderer</span> : <span class="tp">ISvgRenderer</span>
 {
     <span class="kw">public string</span> <span class="fn">Render</span>(<span class="tp">IconData</span> icon, <span class="tp">SvgRenderOptions</span>? options = <span class="kw">null</span>)
     {
-        <span class="cm">// Convert to WPF DrawingGroup...</span>
+        <span class="kw">var</span> opts = options ?? <span class="tp">SvgRenderOptions</span>.Default;
+        <span class="cm">// Access icon.Elements to get SVG child elements</span>
+        <span class="cm">// Each element has: Tag (path, circle, rect, etc.)</span>
+        <span class="cm">//                    Attributes (d, cx, cy, r, etc.)</span>
+        <span class="kw">foreach</span> (<span class="kw">var</span> el <span class="kw">in</span> icon.Elements)
+        {
+            <span class="kw">var</span> tag = el.Tag;              <span class="cm">// e.g., "path", "circle"</span>
+            <span class="kw">var</span> attrs = el.Attributes;     <span class="cm">// e.g., { "d": "M12 2..." }</span>
+        }
+        <span class="kw">return</span> <span class="str">"&lt;!-- XAML output --&gt;"</span>;
     }
-}</pre>
+}
+
+<span class="cm">// Use directly</span>
+<span class="tp">ISvgRenderer</span> renderer = <span class="kw">new</span> <span class="tp">WpfSvgRenderer</span>();
+<span class="kw">var</span> output = renderer.<span class="fn">Render</span>(<span class="tp">RnIcons</span>.<span class="fn">Star</span>, <span class="kw">new</span> <span class="tp">SvgRenderOptions</span> { Size = <span class="num">16</span> });
+
+<span class="cm">// Or register via DI</span>
+builder.Services.<span class="fn">AddSingleton</span>&lt;<span class="tp">ISvgRenderer</span>, <span class="tp">WpfSvgRenderer</span>&gt;();</pre>
+        </div>
     </div>
 </section>
 
@@ -389,16 +636,6 @@ builder.Services.<span class="fn">AddRnLucazor</span>();
     </div>
 </footer>
 
-<script>
-function switchTab(index) {
-    document.querySelectorAll('.code-tab').forEach((t, i) => {
-        t.classList.toggle('active', i === index);
-    });
-    document.querySelectorAll('.code-block').forEach((b, i) => {
-        b.classList.toggle('active', i === index);
-    });
-}
-</script>
 
 </body>
 </html>
