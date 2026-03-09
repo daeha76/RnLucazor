@@ -5,3 +5,7 @@ obj/
 EOF
 nupkgs/
 node_modules/
+.DB_Store/
+samples/
+src/.DS_Store
+src/Daeha.Lucazor/.DS_Store
