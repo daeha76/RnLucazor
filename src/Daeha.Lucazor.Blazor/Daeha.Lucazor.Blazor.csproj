@@ -9,11 +9,11 @@
 
     <!-- NuGet Package -->
     <PackageId>Daeha.RnLucazor.Blazor</PackageId>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <Authors>Daeha</Authors>
     <Description>Lucazor Blazor components — use 1700+ Lucide icons as native Blazor components with DI support and full IntelliSense.</Description>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
-    <PackageProjectUrl>https://lucide.dev</PackageProjectUrl>
+    <PackageProjectUrl>https://daeha76.github.io/RnLucazor/</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/daeha76/Lucazor</RepositoryUrl>
     <PackageTags>icons;svg;lucide;lucazor;blazor;razor;components</PackageTags>

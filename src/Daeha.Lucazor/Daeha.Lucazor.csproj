@@ -10,11 +10,11 @@
 
     <!-- NuGet Package -->
     <PackageId>Daeha.RnLucazor</PackageId>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <Authors>Daeha</Authors>
     <Description>Lucide icon library for .NET — 1700+ beautiful open-source icons as code with DI support and pluggable rendering.</Description>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
-    <PackageProjectUrl>https://lucide.dev</PackageProjectUrl>
+    <PackageProjectUrl>https://daeha76.github.io/RnLucazor/</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/daeha76/Lucazor</RepositoryUrl>
     <PackageTags>icons;svg;lucide;lucazor;dotnet</PackageTags>
