@@ -10,7 +10,7 @@
 
     <!-- NuGet Package -->
     <PackageId>Daeha.RnLucazor</PackageId>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
     <Authors>Daeha</Authors>
     <Description>Lucide icon library for .NET — 1700+ beautiful open-source icons as code with DI support and pluggable rendering.</Description>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
