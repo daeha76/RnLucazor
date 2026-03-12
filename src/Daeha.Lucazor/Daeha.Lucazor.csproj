@@ -7,6 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>RnLucazor</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- 상위 프로젝트의 TreatWarningsAsErrors 전파 방지 -->
+    <NoWarn>$(NoWarn);1591;1574</NoWarn>
 
     <!-- NuGet Package -->
     <PackageId>Daeha.RnLucazor</PackageId>
